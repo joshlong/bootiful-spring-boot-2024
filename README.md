@@ -16,6 +16,7 @@ what things do we want to include in the new edition?
 - kafka 
 - graalvm native images
 - Postgres?
+- spring authorization server
 
 
 
