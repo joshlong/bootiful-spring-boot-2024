@@ -1,0 +1,27 @@
+type Query {
+    customers : [Customer]
+    products : [Product]
+}
+
+type Order {
+    id: ID
+    product: ID
+    customer: ID
+}
+
+type Mutation  {
+    createProduct (name :String) : Product
+    placeOrder ( customer:ID , product: ID) : Order
+}
+
+type Product {
+    id:ID
+    name:String
+    description:String
+    inventory: Int
+}
+
+type Customer {
+    name : String
+    id:ID
+}
