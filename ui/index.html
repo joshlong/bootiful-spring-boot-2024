@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Bootiful CRM </title>
+    <script type="text/javascript">
+        window.addEventListener('load', async e => {
+            console.log('initializing the CRM client side')
+            const response = await fetch('/api/');
+            const data = await response.json();
+            console.log(data);
+        })
+
+    </script>
+</head>
+<body>
+<h1>Welcome to the Spring CRM!</h1>
+
+
+</body>
+</html>

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -14,6 +13,9 @@ import org.springframework.security.oauth2.server.authorization.settings.ClientS
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.Set;
+
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 
 @SpringBootApplication
 public class AuthServiceApplication {
@@ -33,9 +35,10 @@ public class AuthServiceApplication {
 				.withId("spring")
 				.scopes(s -> s.addAll(Set.of("openid", "user.read")))
 				.clientSecret("crm")
+				.redirectUri("http://127.0.0.1:1010/login/oauth2/code/spring")
 				.clientId("crm")
 				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
-				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+				.authorizationGrantTypes(s -> s.addAll(Set.of(AUTHORIZATION_CODE, REFRESH_TOKEN)))
 				.build();
 		return new InMemoryRegisteredClientRepository(rc );
 	}

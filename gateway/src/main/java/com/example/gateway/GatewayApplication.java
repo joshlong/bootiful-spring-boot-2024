@@ -7,6 +7,8 @@ import org.springframework.cloud.gateway.mvc.ProxyExchange;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URI;
@@ -25,29 +27,29 @@ public class GatewayApplication {
 
 @ResponseBody
 @Controller
-class SimpleController {
+class GatewayProxyController {
 
+    private static final String WILDCARD = "**";
 
-    static final String WILDCARD = "**";
+    private static final String API_PREFIX = "/api/";
 
-    static final String API_PREFIX = "/docs/";
+    private static final String UI_PREFIX = "/ui/";
 
-    static final String UI_PREFIX = "/";
-
-
-    @GetMapping(UI_PREFIX + WILDCARD)
-    ResponseEntity<?> ui(ProxyExchange<byte[]> proxy) {
+    @GetMapping(API_PREFIX + WILDCARD)
+    ResponseEntity<?> api(ProxyExchange<byte[]> proxy) {
         var path = proxy.path(API_PREFIX);
         return proxy
-                .uri(URI.create("https://cnn.com/" + path))
+                .uri(URI.create("http://localhost:8080/" + path))
                 .get();
     }
 
-    @GetMapping(API_PREFIX + WILDCARD)
-    ResponseEntity<?> api (ProxyExchange<byte[]> proxy) {
-        var path = proxy.path(API_PREFIX);
+    @RequestMapping(UI_PREFIX + WILDCARD)
+    ResponseEntity<?> ui(ProxyExchange<byte[]> proxy) {
+        var path = proxy.path(UI_PREFIX);
+        var uri = URI.create("http://localhost:9000/" + path);
+        System.out.println("going to forward to [" + uri + "]");
         return proxy
-                .uri(URI.create("https://docs.spring.io/" + path))
+                .uri(uri)
                 .get();
     }
 
