@@ -32,12 +32,11 @@ public class GatewayApplication {
 
     private static final String API_PREFIX = "/api/";
 
-    private static final String UI_PREFIX = "/ui/";
+    private static final String UI_PREFIX = "/";
 
     @Bean
     RouterFunction<ServerResponse> apiRoute () {
-        return route("crm")
-//                .GET(API_PREFIX , http("http://localhost:8080/"))
+        return route("api")
                 .GET(API_PREFIX + WILDCARD, http("http://localhost:8080"))
                 .filter(tokenRelay())
                 .before(rewritePath(API_PREFIX + "(?<segment>.*)", "/${segment}"))
@@ -46,7 +45,7 @@ public class GatewayApplication {
 
     @RequestMapping(UI_PREFIX + WILDCARD)
     ResponseEntity<?> uiRoute(ProxyExchange<byte[]> proxy) {
-        var path = proxy.path(UI_PREFIX);
+        var path = proxy.path();
         return proxy
                 .uri(URI.create("http://localhost:9000/" + path))
                 .get();
