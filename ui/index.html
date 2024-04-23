@@ -7,28 +7,15 @@
     <script type="text/javascript">
 
         async function purchase(username) {
-            const url = '/api/purchases';
-            const data = {
-                username: username,
-                productId: 42,
-                quantity: 420
-            };
-
-            const response = await fetch(url, {
+            const response = await fetch('/api/purchases', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: username, productId: 42, quantity: 420
+                })
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
             return await response.json();
         }
-
 
         window.addEventListener('load', async () => {
             console.log('initializing the CRM client side')
@@ -36,10 +23,8 @@
             const data = await response.json();
             const username = data['name']
             document.getElementById('name').innerText = username
-
-            await purchase(username)
-
-
+            const purchaseId = await purchase(username)
+            console.log (`You've heard of auto configuration? we just pioneered auto consumption! Congrats, here's your purchase ID: ${purchaseId} `)
         })
 
     </script>

@@ -1,4 +1,4 @@
-create table if not exists purchases
+create table if not exists purchase
 (
     id         serial primary key,
     username   text not null,
