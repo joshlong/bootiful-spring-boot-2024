@@ -32,24 +32,24 @@ public class AuthServiceApplication {
 	@Bean
 	RegisteredClientRepository clients() {
 		var rc = RegisteredClient
-				.withId("spring")
-				.scopes(s -> s.addAll(Set.of("openid", "user.read")))
+				.withId("crm")
+				.scopes(s -> s.add("openid"))
 				.clientSecret("crm")
 				.redirectUri("http://127.0.0.1:1010/login/oauth2/code/spring")
 				.clientId("crm")
 				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
 				.authorizationGrantTypes(s -> s.addAll(Set.of(AUTHORIZATION_CODE, REFRESH_TOKEN)))
 				.build();
-		return new InMemoryRegisteredClientRepository(rc );
+		return new InMemoryRegisteredClientRepository(rc);
 	}
 
 	@Bean
 	InMemoryUserDetailsManager users(PasswordEncoder encoder) {
-		return new InMemoryUserDetailsManager(
-				User.withUsername("jlong")
-						.password(encoder.encode("pw"))
-						.roles("USER")
-						.build()
-		);
+		var user = User
+				.withUsername("jlong")
+				.password(encoder.encode("pw"))
+				.roles("USER")
+				.build();
+		return new InMemoryUserDetailsManager(user);
 	}
 }
