@@ -20,8 +20,8 @@ public class ServiceApplication {
 		SpringApplication.run(ServiceApplication.class, args);
 	}
 
-	@GetMapping("/hello")
+	@GetMapping("/me")
 	Map<String, String> hello(Principal principal) {
-		return Map.of("message", "hello, " +principal.getName() +"!");
+		return Map.of("name",  principal.getName()  );
 	}
 }
