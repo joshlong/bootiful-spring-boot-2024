@@ -30,11 +30,11 @@ public class AuthServiceApplication {
 	}
 
 	@Bean
-	RegisteredClientRepository clients() {
+	RegisteredClientRepository clients(PasswordEncoder passwordEncoder) {
 		var rc = RegisteredClient
 				.withId("crm")
 				.scopes(s -> s.add("openid"))
-				.clientSecret("crm")
+				.clientSecret(passwordEncoder.encode("crm"))
 				.redirectUri("http://127.0.0.1:1010/login/oauth2/code/spring")
 				.clientId("crm")
 				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
@@ -45,11 +45,16 @@ public class AuthServiceApplication {
 
 	@Bean
 	InMemoryUserDetailsManager users(PasswordEncoder encoder) {
-		var user = User
+		var jlong = User
 				.withUsername("jlong")
 				.password(encoder.encode("pw"))
 				.roles("USER")
 				.build();
-		return new InMemoryUserDetailsManager(user);
+		var ciberkleid = User
+				.withUsername("ciberkleid")
+				.password(encoder.encode("pw"))
+				.roles("USER")
+				.build();
+		return new InMemoryUserDetailsManager(ciberkleid, jlong);
 	}
 }
