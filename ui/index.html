@@ -11,27 +11,32 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    username: username, productId: 42, quantity: 420
+                    username: username, productId: 42, quantity: 321
                 })
             });
             return await response.json();
         }
 
         window.addEventListener('load', async () => {
-            console.log('initializing the CRM client side')
-            const response = await fetch('/api/me');
-            const data = await response.json();
-            const username = data['name']
-            document.getElementById('name').innerText = username
-            const purchaseId = await purchase(username)
-            console.log (`You've heard of auto configuration? we just pioneered auto consumption! Congrats, here's your purchase ID: ${purchaseId} `)
-        })
+            console.debug('initializing the CRM client side')
+            const username = (await (await fetch('/api/me')).json())['name']
+            const nameElement = document.getElementById('name');
+            const checkoutElement = document.getElementById('checkout');
+            nameElement.innerText = username
 
+            checkoutElement.addEventListener('click', async e => {
+                const purchaseId = await purchase(username)
+                document.getElementById('data').innerText = 'The purchase ID is ' + purchaseId
+            })
+        })
     </script>
 </head>
 <body>
 <p>Welcome, <b><span id="name"></span></b>, to the Spring CRM!</p>
 
+<button id="checkout" type="button">checkout
+</button>
+<div id="data"></div>
 
 
 </body>

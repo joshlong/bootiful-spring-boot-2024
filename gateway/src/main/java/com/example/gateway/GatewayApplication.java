@@ -3,12 +3,19 @@ package com.example.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.mvc.ProxyExchange;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
+
+import java.net.URI;
 
 import static org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath;
 import static org.springframework.cloud.gateway.server.mvc.filter.TokenRelayFilterFunctions.tokenRelay;
@@ -18,6 +25,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @SpringBootApplication
+@Controller
+@ResponseBody
 public class GatewayApplication {
 
     public static void main(String[] args) {
@@ -32,7 +41,6 @@ public class GatewayApplication {
     private static final String UI_PREFIX = "/";
     private static final String UI_HOST = "http://localhost:9000";
 
-    // TODO: do _NOT_ reorder these! the API MUST come first! can we use @Ordered?
     @Bean
     RouterFunction<ServerResponse> apiRouteGets() {
         return route("crmGets")
@@ -51,13 +59,19 @@ public class GatewayApplication {
                 .build();
     }
 
-    @Bean
+    /*   @Bean
     RouterFunction<ServerResponse> uiRoute() {
         return route("ui")
                 .GET(UI_PREFIX + WILDCARD, http(UI_HOST))
                 .before(rewritePath(UI_PREFIX + "(?<segment>.*)", "/${segment}"))
                 .build();
     }
+    */
+    @GetMapping(UI_PREFIX)
+    ResponseEntity<?> ui(ProxyExchange<?> request) {
+        return request.uri(URI.create(UI_HOST + request.path())).get();
+    }
+
 
     @Bean
     SecurityFilterChain mySecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
