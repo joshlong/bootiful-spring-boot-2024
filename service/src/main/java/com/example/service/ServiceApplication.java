@@ -21,7 +21,7 @@ public class ServiceApplication {
 	}
 
 	@GetMapping("/me")
-	Map<String, String> hello(Principal principal) {
+	Map<String, String> me(Principal principal) {
 		return Map.of("name",  principal.getName()  );
 	}
 }

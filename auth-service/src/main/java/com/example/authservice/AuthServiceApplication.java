@@ -2,20 +2,6 @@ package com.example.authservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import java.util.Set;
-
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 
 @SpringBootApplication
 public class AuthServiceApplication {
@@ -23,12 +9,12 @@ public class AuthServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthServiceApplication.class, args);
 	}
-
+/*
 	@Bean
 	PasswordEncoder passwordEncoder (){
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder() ;
-	}
-
+	}*/
+/*
 	@Bean
 	RegisteredClientRepository clients(PasswordEncoder passwordEncoder) {
 		var rc = RegisteredClient
@@ -44,7 +30,7 @@ public class AuthServiceApplication {
 	}
 
 	@Bean
-	InMemoryUserDetailsManager users(PasswordEncoder encoder) {
+	UserDetailsManager users(PasswordEncoder encoder) {
 		var jlong = User
 				.withUsername("jlong")
 				.password(encoder.encode("pw"))
@@ -56,5 +42,5 @@ public class AuthServiceApplication {
 				.roles("USER")
 				.build();
 		return new InMemoryUserDetailsManager(ciberkleid, jlong);
-	}
+	}*/
 }
