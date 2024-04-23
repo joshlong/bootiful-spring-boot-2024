@@ -1,21 +1,7 @@
--- drop table if exists product;
-create table if not exists product
+create table if not exists purchases
 (
-    id        serial primary key,
-    sku       text   not null,
-    inventory bigint not null default 0
-);
-
--- drop table if exists product_order;
-create table if not exists cart
-(
-    id serial primary key
-);
-
--- drop table if exists line_item;
-create table if not exists line_item
-(
-    id            serial primary key not null ,
-    product       bigint not null references product (id),
-    cart      bigint not null references cart (id)
+    id         serial primary key,
+    username   text not null,
+    product_id int  not null,
+    quantity   int  not null default 1
 );

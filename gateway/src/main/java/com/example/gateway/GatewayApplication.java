@@ -30,13 +30,25 @@ public class GatewayApplication {
 
     // TODO: do _NOT_ reorder these! the API MUST come first! can we use @Ordered?
     @Bean
-    RouterFunction<ServerResponse> apiRoute() {
-        return route("crm")
+    RouterFunction<ServerResponse> apiRouteGets() {
+        return route("crmGets")
                 .GET(CRM_SERVICE_PREFIX + WILDCARD, http(CRM_SERVICE_HOST))
                 .before(rewritePath(CRM_SERVICE_PREFIX + "(?<segment>.*)", "/${segment}"))
                 .filter(tokenRelay())
                 .build();
     }
+/*
+
+    @Bean
+    RouterFunction<ServerResponse> apiRoutePosts() {
+        return route("crmPosts")
+                .POST(CRM_SERVICE_PREFIX + WILDCARD, http(CRM_SERVICE_HOST))
+                .before(rewritePath(CRM_SERVICE_PREFIX + "(?<segment>.*)", "/${segment}"))
+                .filter(tokenRelay())
+                .build();
+    }
+*/
+
 
     @Bean
     RouterFunction<ServerResponse> uiRoute() {

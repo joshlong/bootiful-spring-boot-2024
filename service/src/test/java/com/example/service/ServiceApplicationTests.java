@@ -10,7 +10,9 @@ class ServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
-		ApplicationModules.of(ServiceApplication.class).verify();
+		var applicationModules = ApplicationModules.of(ServiceApplication.class);
+		System.out.println(applicationModules);
+		applicationModules.verify();
 	}
 
 }
