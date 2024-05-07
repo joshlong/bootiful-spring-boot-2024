@@ -7,13 +7,21 @@ For further reference, please consider the following sections:
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.5/maven-plugin/reference/html/)
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.5/maven-plugin/reference/html/#build-image)
 * [GraalVM Native Image Support](https://docs.spring.io/spring-boot/docs/3.2.5/reference/html/native-image.html#native-image)
+* [Spring Integration JDBC Module Reference Guide](https://docs.spring.io/spring-integration/reference/html/jdbc.html)
+* [Spring Integration Test Module Reference Guide](https://docs.spring.io/spring-integration/reference/html/testing.html)
+* [Spring Integration HTTP Module Reference Guide](https://docs.spring.io/spring-integration/reference/html/http.html)
+* [Spring Boot Testcontainers support](https://docs.spring.io/spring-boot/docs/3.2.5/reference/html/features.html#features.testing.testcontainers)
+* [Testcontainers Postgres Module Reference Guide](https://java.testcontainers.org/modules/databases/postgres/)
+* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#web)
+* [PGvector Vector Database](https://docs.spring.io/spring-ai/reference/api/vectordbs/pgvector.html)
 * [OpenAI](https://docs.spring.io/spring-ai/reference/api/clients/openai-chat.html)
 * [Spring Modulith](https://docs.spring.io/spring-modulith/reference/)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#web)
-* [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#actuator)
-* [JDBC API](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#data.sql)
+* [Spring Data JDBC](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#data.sql.jdbc)
+* [OAuth2 Resource Server](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#web.security.oauth2.server)
+* [Spring Integration](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#messaging.spring-integration)
+* [Spring Batch](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#howto.batch)
 * [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#features.docker-compose)
-* [Spring for RabbitMQ](https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/index.html#messaging.amqp)
+* [Testcontainers](https://java.testcontainers.org/)
 
 ### Guides
 The following guides illustrate how to use some features concretely:
@@ -21,10 +29,9 @@ The following guides illustrate how to use some features concretely:
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
-* [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/)
-* [Managing Transactions](https://spring.io/guides/gs/managing-transactions/)
-* [Messaging with RabbitMQ](https://spring.io/guides/gs/messaging-rabbitmq/)
+* [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/basics)
+* [Integrating Data](https://spring.io/guides/gs/integration/)
+* [Creating a Batch Service](https://spring.io/guides/gs/batch-processing/)
 
 ### Additional Links
 These additional references should also help you:
@@ -35,8 +42,7 @@ These additional references should also help you:
 This project contains a Docker Compose file named `compose.yaml`.
 In this file, the following services have been defined:
 
-* postgres: [`postgres:latest`](https://hub.docker.com/_/postgres)
-* rabbitmq: [`rabbitmq:latest`](https://hub.docker.com/_/rabbitmq)
+* pgvector: [`pgvector/pgvector:pg16`](https://hub.docker.com/r/pgvector/pgvector)
 
 Please review the tags of the used images and set them to the same as you're running in production.
 
@@ -86,4 +92,14 @@ To run your existing tests in a native image, run the following goal:
 ```
 $ ./mvnw test -PnativeTest
 ```
+
+### Testcontainers support
+
+This project uses [Testcontainers at development time](https://docs.spring.io/spring-boot/docs/3.2.5/reference/html/features.html#features.testing.testcontainers.at-development-time).
+
+Testcontainers has been configured to use the following Docker images:
+
+* [`pgvector/pgvector:pg16`](https://hub.docker.com/r/pgvector/pgvector)
+
+Please review the tags of the used images and set them to the same as you're running in production.
 

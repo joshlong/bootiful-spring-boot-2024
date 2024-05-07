@@ -7,10 +7,3 @@ services:
       - 'POSTGRES_USER=myuser'
     ports:
       - '5432:5432'
-  rabbitmq:
-    image: 'rabbitmq:latest'
-    environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
-    ports:
-      - '5672:5432'
