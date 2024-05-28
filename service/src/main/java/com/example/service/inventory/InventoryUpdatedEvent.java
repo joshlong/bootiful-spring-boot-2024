@@ -1,6 +1,7 @@
 package com.example.service.inventory;
 
-public record InventoryUpdatedEvent(int  order  ,
-                                    int product ,
-                                    int quantity  ) {
+import java.time.Instant;
+
+public record InventoryUpdatedEvent (Instant instant ,
+                                     int product, int quantity) {
 }

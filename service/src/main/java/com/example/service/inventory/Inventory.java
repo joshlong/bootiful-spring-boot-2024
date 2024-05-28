@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 class Inventory {
 
     @ApplicationModuleListener
-    void handle(InventoryUpdatedEvent inventoryUpdatedEvent) throws InterruptedException {
-        System.out.println("starting to wait...");
+    void inventoryUpdated(InventoryUpdatedEvent inventoryUpdatedEvent) throws Exception {
+        System.out.println("started: got an inventory updated event [" + inventoryUpdatedEvent + "]");
         Thread.sleep(10_000);
-        System.out.println("the inventory [" + inventoryUpdatedEvent +
-                "] was updated!");
+        System.out.println("got an inventory updated event [" + inventoryUpdatedEvent + "]");
+        Thread.sleep(10_000);
+        System.out.println("finished: got an inventory updated event [" + inventoryUpdatedEvent + "]");
+
     }
 }
