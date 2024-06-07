@@ -10,7 +10,9 @@ import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.simple.JdbcClient;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +34,15 @@ class DogPlacementAssistantConfiguration {
     }
 
     @Bean
-    ApplicationRunner applicationRunner(DogRepository repository, VectorStore vs, ChatClient chatClient) {
+    JdbcClient jdbcClient (DataSource dataSource) {
+        return JdbcClient.create(dataSource) ;
+    }
+
+    @Bean
+    ApplicationRunner applicationRunner(JdbcClient db, DogRepository repository, VectorStore vs, ChatClient chatClient) {
         return args -> {
+
+            db.sql("delete from vector_store").update();
 
             repository.findAll().forEach(dog -> {
                 var dogument = new Document("name: " + dog.name() +
