@@ -25,7 +25,13 @@ class AdoptionController {
     @PostMapping("/{id}")
     void adopt(@PathVariable Integer id, @RequestBody Map<String, String> owner) {
         this.repository.findById(id).ifPresent(dog -> {
-            var saved = this.repository.save(new Dog(id, dog.name(), dog.description(), dog.dob(), owner.get("name")));
+            var saved = this.repository.save(new Dog(
+                id,
+                dog.name(),
+                dog.description(),
+                dog.dob(),
+                owner.get("name"))
+            );
             this.publisher.publishEvent(new DogAdoptedEvent(dog.id(), dog.name()));
             System.out.println("saved [" + saved + "]");
         });

@@ -6,6 +6,7 @@ import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
+@RegisterReflectionForBinding(DogAdoptionSuggestion.class)
 class DogPlacementAssistantConfiguration {
 
     @Bean
@@ -46,9 +48,12 @@ class DogPlacementAssistantConfiguration {
                     .prompt()
                     .user(prompt)
                     .call()
-                    .content();
-            System.out.println("content: [" + content + "]");
+                    .entity(DogAdoptionSuggestion.class);
+            System.out.println(content);
 
         };
     }
+}
+
+record DogAdoptionSuggestion(String name, String description) {
 }
